@@ -1,0 +1,12 @@
+300c72d046039962c8b3fc6cd0874c11 *DESCRIPTION
+e78a6921eb3bc76864bc15d77ffd7696 *LICENSE
+199b127811673f6feb0fa9fbf18a4652 *LICENSE.note
+c95d736b484bc45f46be6bcbd874b8b3 *NAMESPACE
+1bff740e92c8800ad523197b910bbcab *NEWS.md
+c877de6405479553007baa961938f595 *R/dfmirror_func.R
+be0d625de9a3da29e0e6abf1a0537eb6 *README.md
+94061befe6cfb4ce78b595d33092b2ea *man/figures/README-example1-1.png
+baf9813438a148907bb685ddac6f5556 *man/figures/README-example3-1.png
+c7c34a437c23f94c2c5138f6b0d9f735 *man/simulate_dataframe.Rd
+9ff85848579186e79b8e7f6d14f99864 *tests/testthat.R
+225e3812b897786befc574f805c96dc2 *tests/testthat/test-dfmirror_func.R
