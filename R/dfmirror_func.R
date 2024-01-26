@@ -10,7 +10,10 @@
 #'@importFrom fitdistrplus fitdist
 #'@importFrom stats rnorm
 #'@importFrom stats shapiro.test
-
+#'@importFrom stats rgamma
+#'@importFrom stats sd
+#'@importFrom MASS fitdistr
+#'@importFrom e1071 skewness
 
 #' @export
 #'
@@ -29,6 +32,17 @@
 
 simulate_dataframe <- function(input_df, num_obs = 1, columns_to_simulate = colnames(input_df)) {
 
+
+  simulate_skewed_gamma <- function(column_data, num_obs) {
+    # Custom function to simulate skewed gamma distribution while maintaining mean and standard deviation
+    mean_val <- mean(column_data)
+    sd_val <- sd(column_data)
+    shape <- (mean_val / sd_val)^2
+    rate <- mean_val / sd_val^2
+    simulated_data <- rgamma(num_obs, shape = shape, rate = rate)
+    return(simulated_data)
+  }
+
   simulated_df <- data.frame(matrix(NA, nrow = num_obs, ncol = length(columns_to_simulate)))
   colnames(simulated_df) <- columns_to_simulate
 
@@ -39,16 +53,27 @@ simulate_dataframe <- function(input_df, num_obs = 1, columns_to_simulate = coln
       # Check for normality using the Shapiro-Wilk test
       shapiro_test <- shapiro.test(input_df[[col]])
 
-      if (shapiro_test$p.value > 0.05) {
-        # If p-value > 0.05, assume normal distribution
+      if (shapiro_test$p.value > 0.05 && length(unique(input_df[[col]])) > 1) {
+        # If p-value > 0.05 and there is variation, assume normal distribution
         dist_fit <- fitdist(input_df[[col]], "norm")
         simulated_df[[col]] <- rnorm(num_obs, mean = dist_fit$estimate[1], sd = dist_fit$estimate[2])
         code <- paste0(code, "  ", col, " = rnorm(", num_obs, ", mean = ", dist_fit$estimate[1], ", sd = ", dist_fit$estimate[2], "),\n")
       } else {
-        # If p-value <= 0.05, assume non-normal distribution
-        sampled_values <- unique(input_df[[col]])
-        simulated_df[[col]] <- sample(sampled_values, num_obs, replace = TRUE)
-        code <- paste0(code, "  ", col, " = sample(c(", paste(sampled_values, collapse = ", "), "), ", num_obs, ", replace = TRUE),\n")
+        # If p-value <= 0.05 or lacks variation, assume non-normal distribution
+        # Impute missing values before checking skewness
+        input_df[[col]][is.na(input_df[[col]])] <- mean(input_df[[col]], na.rm = TRUE)
+        skew_value <- skewness(input_df[[col]])
+
+        if (!is.na(skew_value) && abs(skew_value) > 1) {
+          # If skewness is greater than 1, simulate skewed data using custom function
+          simulated_df[[col]] <- simulate_skewed_gamma(input_df[[col]], num_obs)
+          code <- paste0(code, "  ", col, " = simulate_skewed_gamma(input_df[['", col, "']], ", num_obs, "),\n")
+        } else {
+          # If skewness is not significant or missing, simulate as before
+          sampled_values <- unique(input_df[[col]])
+          simulated_df[[col]] <- sample(sampled_values, num_obs, replace = TRUE)
+          code <- paste0(code, "  ", col, " = sample(c(", paste(sampled_values, collapse = ", "), "), ", num_obs, ", replace = TRUE),\n")
+        }
       }
     } else if (is.factor(input_df[[col]])) {
       simulated_df[[col]] <- factor(sample(levels(input_df[[col]]), num_obs, replace = TRUE))
@@ -64,3 +89,5 @@ simulate_dataframe <- function(input_df, num_obs = 1, columns_to_simulate = coln
 
   return(list(simulated_df = simulated_df, code = code))
 }
+
+

@@ -6,6 +6,8 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/jacobpstein/dfmirroR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/jacobpstein/dfmirroR/actions/workflows/R-CMD-check.yaml)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/dfmirroR)](https://CRAN.R-project.org/package=dfmirroR)
 <!-- badges: end -->
 
 The goal of dfmirroR is to create mirrored version of data sets *and*
@@ -31,17 +33,24 @@ You can install the development version of dfmirroR from
 ``` r
 # install.packages("devtools")
 devtools::install_github("jacobpstein/dfmirroR")
-#> Downloading GitHub repo jacobpstein/dfmirroR@HEAD
 #> 
 #> ── R CMD build ─────────────────────────────────────────────────────────────────
-#> * checking for file ‘/private/var/folders/5m/kgrgm7ns0q10f7dp56dv4ylm0000gn/T/RtmpK1n7Xv/remotese78e95b04bd/jacobpstein-dfmirroR-b58b0fd/DESCRIPTION’ ... OK
+#> * checking for file ‘/private/var/folders/5m/kgrgm7ns0q10f7dp56dv4ylm0000gn/T/RtmpPA5DAX/remotes62227c0e005b/jacobpstein-dfmirroR-3c8ca46/DESCRIPTION’ ... OK
 #> * preparing ‘dfmirroR’:
 #> * checking DESCRIPTION meta-information ... OK
 #> * checking for LF line-endings in source and make files and shell scripts
 #> * checking for empty or unneeded directories
-#> * building ‘dfmirroR_1.0.0.tar.gz’
-#> Installing package into '/private/var/folders/5m/kgrgm7ns0q10f7dp56dv4ylm0000gn/T/RtmpI2CyXg/temp_libpathe54e137b85bb'
-#> (as 'lib' is unspecified)
+#> * building ‘dfmirroR_2.1.0.tar.gz’
+```
+
+You can install also the CRAN version of the package, but it’s not as
+good as the development version:
+
+``` r
+install.packages("dfmirroR")
+#> 
+#> The downloaded binary packages are in
+#>  /var/folders/5m/kgrgm7ns0q10f7dp56dv4ylm0000gn/T//RtmpPA5DAX/downloaded_packages
 ```
 
 ## Example
@@ -122,14 +131,22 @@ cat(air_mirror$code)
 ### Citations
 
 This package is indebted to the great
-[`fitdistrplus`](https://github.com/aursiber/fitdistrplus) package,
-which allows `dfmirroR` to dynamically mimic the distribution of input
-data. For more, see:
+[`fitdistrplus`](https://CRAN.R-project.org/package=fitdistrplus)
+package, which allows `dfmirroR` to dynamically mimic the distribution
+of input data. For more, see:
 
 Marie Laure Delignette-Muller, Christophe Dutang (2015). *fitdistrplus:
 An R Package for Fitting Distributions. Journal of Statistical
 Software*. <https://www.jstatsoft.org/article/view/v064i04> DOI
 10.18637/jss.v064.i04.
+
+This package relies on the `skewness` function from: David Meyer, et
+al. [e1071](https://CRAN.R-project.org/package=e1071).
+
+The `MASS` package also provides some functionality. Learn more here:
+Venables WN, Ripley BD (2002). Modern Applied Statistics with S, Fourth
+edition. Springer, New York. ISBN 0-387-95457-0,
+<https://www.stats.ox.ac.uk/pub/MASS4/>
 
 This package also pulls from the core R
 [`stats`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/00Index.html)
