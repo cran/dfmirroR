@@ -1,7 +1,7 @@
 Package: dfmirroR
 Title: Simulate a Data Frame Mirroring an Input and Produce Shareable
         Simulation Code
-Version: 2.1.0
+Version: 2.2.0
 Authors@R: 
     person("Jacob", "Patterson-Stein", email = "jacobpstein@gmail.com",
   role = c("aut", "cre"))
@@ -10,14 +10,14 @@ Description: The 'dfmirroR' package allows users to input a data frame, simulate
 License: MIT + file LICENSE
 Encoding: UTF-8
 Depends: R (>= 2.10)
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.2
 Suggests: testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Imports: fitdistrplus, stats, MASS, e1071
 URL: https://github.com/jacobpstein/dfmirroR
 BugReports: https://github.com/jacobpstein/dfmirroR/issues
 NeedsCompilation: no
-Packaged: 2024-01-26 20:33:55 UTC; jacobpstein
+Packaged: 2025-07-23 19:11:36 UTC; jacobpstein
 Author: Jacob Patterson-Stein [aut, cre]
 Repository: CRAN
-Date/Publication: 2024-01-26 20:50:02 UTC
+Date/Publication: 2025-07-23 19:30:02 UTC
